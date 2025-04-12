@@ -1,6 +1,9 @@
-import React from 'react';
+import ShowCart from "../ShowCart/ShowCart";
 
-const Navbar = () => {
+
+const Navbar = ({ carts, subTotal,removeCartFromShowCart }) => {
+
+
     return (
         <div>
             <nav className="sticky top-0 z-10 glass">
@@ -57,7 +60,7 @@ const Navbar = () => {
                                             stroke-width="2"
                                             d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
                                     </svg>
-                                    <span id="cart-total" className="badge badge-sm indicator-item">0</span>
+                                    <span id="cart-total" className="badge badge-sm indicator-item">{carts.length}</span>
                                 </div>
                             </div>
                             <div
@@ -65,10 +68,10 @@ const Navbar = () => {
                                 className="card card-compact dropdown-content bg-base-100 z-1 mt-3 w-52 shadow">
                                 <div className="card-body">
                                     <span className="text-lg font-bold">
-                                        <span>0</span> Items</span>
-                                    <span className="text-info">Subtotal: $ <span id="sum-total">0</span></span>
+                                        <span>{carts.length}</span> Items</span>
+                                    <span className="text-info">Subtotal: $ {subTotal}</span>
                                     <div className="card-actions">
-                                        <button className="btn btn-success text-white btn-block">
+                                        <button onClick={() => document.getElementById('my_modal_1').showModal()} className="btn btn-success text-white btn-block">
                                             View cart
                                         </button>
                                     </div>
@@ -78,6 +81,23 @@ const Navbar = () => {
                     </div>
                 </div>
             </nav>
+            {/* Open the modal using document.getElementById('ID').showModal() method */}
+            
+            <dialog id="my_modal_1" className="modal">
+                <div className="modal-box">
+                    <div className="space-y-3">
+                    {
+                        carts.map(cart=><ShowCart key={cart.id} removeCartFromShowCart={removeCartFromShowCart} cart={cart}></ShowCart>)
+                    }
+                    </div>
+                    <div className="modal-action">
+                        <form method="dialog">
+                            {/* if there is a button in form, it will close the modal */}
+                            <button className="btn">Close</button>
+                        </form>
+                    </div>
+                </div>
+            </dialog>
         </div>
     );
 };

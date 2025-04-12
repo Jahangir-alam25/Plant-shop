@@ -1,7 +1,7 @@
 import React, { use } from 'react';
 import Plant from '../Plant/Plant';
 
-const Plants = ({plantsPromise}) => {
+const Plants = ({plantsPromise,handleAddCart,handleConfirm,handleCancel}) => {
     const plants = use(plantsPromise)
     return (
         <div className='bg-green-100'>
@@ -10,6 +10,9 @@ const Plants = ({plantsPromise}) => {
                 {
                     plants.map(plant=><Plant
                         key={plant.id}
+                        handleAddCart={handleAddCart}
+                        handleConfirm={handleConfirm}
+                        handleCancel={handleCancel}
                         plant={plant}></Plant>)
                 }
             </div>
